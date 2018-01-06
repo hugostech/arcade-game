@@ -15,6 +15,7 @@ var Engine = (function(global) {
      * 创建 canvas 元素，拿到对应的 2D 上下文
      * 设置 canvas 元素的高/宽 然后添加到dom中
      */
+    debugger;
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
@@ -27,6 +28,7 @@ var Engine = (function(global) {
 
     /* 这个函数是整个游戏的主入口，负责适当的调用 update / render 函数 */
     function main() {
+
         /* 如果你想要更平滑的动画过度就需要获取时间间隙。因为每个人的电脑处理指令的
          * 速度是不一样的，我们需要一个对每个人都一样的常数（而不管他们的电脑有多快）
          * 就问你屌不屌！
