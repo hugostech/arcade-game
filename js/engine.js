@@ -15,7 +15,7 @@ var Engine = (function(global) {
      * 创建 canvas 元素，拿到对应的 2D 上下文
      * 设置 canvas 元素的高/宽 然后添加到dom中
      */
-    debugger;
+    // debugger;
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
@@ -78,7 +78,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        // player.update();
     }
 
     /* 这个函数做了一些游戏的初始渲染，然后调用 renderEntities 函数。记住，这个函数
@@ -87,6 +87,7 @@ var Engine = (function(global) {
      * 动画的幻觉，但是实际上，他们只是不停的在重绘整个屏幕。
      */
     function render() {
+        // debugger;
         /* 这个数组保存着游戏关卡的特有的行对应的图片相对路径。 */
         var rowImages = [
                 'images/water-block.png',   // 这一行是河。
