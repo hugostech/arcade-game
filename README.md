@@ -12,4 +12,4 @@ $ open ./index.html
 
 Usage
 -----
-This project is small game. You can use keybord to control the player to cross the river by using key `up`,`down`,`left` and `right`.
+This project does not require dependencies management. You can use keybord to control the player crossing the river by using buttons `up`,`down`,`left` and `right`.
