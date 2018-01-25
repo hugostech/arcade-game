@@ -12,3 +12,4 @@ $ open ./index.html
 
 Usage
 -----
+This project is small game. You can use keybord to control the player to cross the river by using key `up`,`down`,`left` and `right`.
