@@ -66,8 +66,9 @@ var Engine = (function(global) {
      * 注释了，你可以在这里实现，也可以在 app.js 对应的角色类里面实现。
      */
     function update(dt) {
+        checkCollisions();
         updateEntities(dt);
-        // checkCollisions();
+
     }
 
     /* 这个函数会遍历在 app.js 定义的存放所有敌人实例的数组，并且调用他们的 update()
@@ -78,7 +79,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        // player.update();
+        player.update();
     }
 
     /* 这个函数做了一些游戏的初始渲染，然后调用 renderEntities 函数。记住，这个函数
@@ -114,6 +115,12 @@ var Engine = (function(global) {
 
         renderEntities();
     }
+    
+    function checkCollisions() {
+        player.isConflicted(allEnemies);
+
+
+    }
 
     /* 这个函数会在每个时间间隙被 render 函数调用。他的目的是分别调用你在 enemy 和 player
      * 对象中定义的 render 方法。
@@ -122,8 +129,8 @@ var Engine = (function(global) {
         /* 遍历在 allEnemies 数组中存放的作于对象然后调用你事先定义的 render 函数 */
         allEnemies.forEach(function(enemy) {
             enemy.render();
-        });
 
+        });
         player.render();
     }
 

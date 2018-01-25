@@ -20,13 +20,23 @@
 //     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 // };
 
+class Base{
+    getRandomInt(min,max){
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.px, this.py);
+    }
+}
+
 // 现在实现你自己的玩家类
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
-class Enemy{
+class Enemy extends Base{
     constructor(){
+        super();
         this.vx = this.getRandomInt(70,200);
         this.py = this.getRandomInt(1,3) * 73;
-        this.px = 0;
+        this.px = -1;
         this.sprite = 'images/enemy-bug.png';
 
     }
@@ -34,26 +44,27 @@ class Enemy{
     update(dt){
         this.px += this.vx*dt;
         if (this.px >= 5*101){
-            this.px = 0;
+            this.px = -1;
             this.py = this.getRandomInt(1,3) * 73;
         }
     }
 
-    render(){
-        ctx.drawImage(Resources.get(this.sprite), this.px, this.py);
+    getPosition(){
+        return [this.px,this.py];
     }
 
-    getRandomInt(min,max){
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+
+
+
 }
 
-class Player{
-    constructor(x,y){
-        this.x = x;
-        this.y = y;
+class Player extends Base{
+    constructor(){
+        super();
+        this.x = this.getRandomInt(0,3);
+        this.y = this.getRandomInt(4,5);
         this.sprite = 'images/char-boy.png';
-        this.render();
+
     }
 
     update(action=''){
@@ -65,35 +76,59 @@ class Player{
                 this.x -= 1;
                 break;
             case 'up':
-                this.y += 1;
+                this.y -= 1;
                 break;
             case 'down':
-                this.y -= 1;
+                this.y += 1;
                 break;
             default:
                 break;
         }
-        if (this.y < 0){
-            this.y = 0;
-        }else if (this.y > 6){
-            this.y = 6;
+        if (this.y < 1){
+            this.reset();
+        }else if (this.y > 5){
+            this.y = 5;
         }
 
         if (this.x<0){
             this.x = 0;
-        }else if(this.x>5){
-            this.x = 5;
+        }else if(this.x>4){
+            this.x = 4;
         }
+        let yp = 75;
+        if (this.y < 2){
+            yp =  65;
+        }
+        this.py = this.y * yp;
+        this.px = this.x*101;
     }
 
-    render(){
-        // ctx.drawImage(Resources.get(this.sprite), this.x*101, this.y*83);
-    }
 
     handleInput(action){
         this.update(action);
         this.render();
     }
+
+    isConflicted(enemies){
+        enemies.forEach(enemy => {
+           let [px,py] = enemy.getPosition();
+
+           if (py/73 === this.y){
+                if((px+85) > this.x*101 && (px+101) < (this.x+1)*101){
+                    this.reset()
+                }
+           }
+        });
+    }
+
+    reset(){
+        this.x = this.getRandomInt(0,3);
+        this.y = this.getRandomInt(4,5);
+    }
+
+
+
+
 }
 
 
@@ -101,7 +136,7 @@ class Player{
 // 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
 // 把玩家对象放进一个叫 player 的变量里面
 const allEnemies = [new Enemy(),new Enemy(),new Enemy()];
-const player = new Player(1,2);
+const player = new Player();
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Play.handleInput()
 // 方法里面。你不需要再更改这段代码了。
